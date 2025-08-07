@@ -3,7 +3,7 @@
 A full-stack Node.js application that analyzes NASA's Kepler telescope data to discover and explore potentially habitable exoplanets. Built with Express.js backend API and interactive frontend dashboard.
 
 ## 🚀 Live Demo
-**[View Live Application](https://your-app-name.onrender.com)** *(Deploy link will be added after hosting)*
+**[View Live Application](https://exoplanet-explorer-og07.onrender.com/)** *(Deploy link will be added after hosting)*
 
 ## 📋 Table of Contents
 - [Features](#features)
