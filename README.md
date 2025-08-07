@@ -251,10 +251,10 @@ Built as a portfolio project to showcase Node.js expertise and full-stack develo
 
 ## 📧 Contact
 
-**Joseph [Your Last Name]**
-- LinkedIn: [Your LinkedIn Profile]
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+**Joseph Okere**
+- LinkedIn: (https://www.linkedin.com/in/joseph-okere/)
+- GitHub: [@Jokere18](https://github.com/Jokere18)
+- Email: your.josephokere18@gmail.com
 
 ---
 

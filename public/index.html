@@ -3,8 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exoplanet Explorer Dashboard</title>
+    <title>🌍 Exoplanet Explorer - Discover Habitable Worlds</title>
+    <meta name="description" content="Explore potentially habitable exoplanets beyond our solar system. Interactive dashboard with real-time data on planet sizes, orbital periods, and habitability zones.">
     <style>
+        /* Cosmic Exoplanet Explorer Design System */
+        :root {
+            /* Cosmic Background */
+            --background: hsl(230, 35%, 7%);
+            --foreground: hsl(210, 40%, 98%);
+
+            /* Glass Cards */
+            --card: hsl(230, 25%, 12%);
+            --card-foreground: hsl(210, 40%, 95%);
+
+            /* Cosmic Primary (Electric Blue) */
+            --primary: hsl(217, 91%, 60%);
+            --primary-foreground: hsl(230, 35%, 7%);
+
+            /* Nebula Secondary (Purple) */
+            --secondary: hsl(260, 55%, 25%);
+            --secondary-foreground: hsl(285, 85%, 85%);
+
+            /* Muted Space */
+            --muted: hsl(230, 20%, 15%);
+            --muted-foreground: hsl(215, 20%, 65%);
+
+            /* Stellar Accent (Green) */
+            --accent: hsl(142, 76%, 36%);
+            --accent-foreground: hsl(142, 85%, 96%);
+
+            /* Cosmic Danger */
+            --destructive: hsl(0, 84%, 60%);
+            --destructive-foreground: hsl(210, 40%, 98%);
+
+            /* Cosmic Borders */
+            --border: hsl(230, 15%, 20%);
+            --input: hsl(230, 15%, 18%);
+            --ring: hsl(217, 91%, 60%);
+
+            /* Enhanced Border Radius */
+            --radius: 0.75rem;
+
+            /* Cosmic Gradients */
+            --gradient-cosmic: linear-gradient(135deg, hsl(230, 35%, 7%) 0%, hsl(260, 55%, 12%) 50%, hsl(285, 60%, 8%) 100%);
+            --gradient-nebula: linear-gradient(135deg, hsl(260, 55%, 25%) 0%, hsl(285, 70%, 35%) 100%);
+            --gradient-stellar: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(217, 91%, 60%) 100%);
+            --gradient-planet: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(285, 70%, 45%) 100%);
+            
+            /* Cosmic Shadows */
+            --shadow-cosmic: 0 25px 50px -12px hsla(230, 35%, 7%, 0.8);
+            --shadow-glow: 0 0 30px hsla(217, 91%, 60%, 0.3);
+            --shadow-nebula: 0 10px 40px hsla(285, 70%, 35%, 0.4);
+            
+            /* Animations */
+            --transition-cosmic: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,358 +67,883 @@
         }
 
         body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a40 100%);
-            color: #ffffff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gradient-cosmic);
+            background-attachment: fixed;
+            color: var(--foreground);
             min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Cosmic Background Effects */
+        .cosmic-bg {
+            background: var(--gradient-cosmic);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Animated Starfield */
+        .cosmic-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(3px 3px at 30px 40px, hsla(217, 91%, 60%, 0.8), transparent),
+                radial-gradient(2px 2px at 80px 120px, hsla(285, 70%, 45%, 0.6), transparent),
+                radial-gradient(1px 1px at 150px 60px, hsla(142, 76%, 36%, 0.9), transparent),
+                radial-gradient(2px 2px at 200px 180px, hsla(217, 91%, 60%, 0.7), transparent),
+                radial-gradient(1px 1px at 270px 100px, hsla(285, 70%, 45%, 0.5), transparent),
+                radial-gradient(3px 3px at 350px 220px, hsla(142, 76%, 36%, 0.8), transparent),
+                radial-gradient(2px 2px at 420px 80px, hsla(217, 91%, 60%, 0.6), transparent),
+                radial-gradient(1px 1px at 500px 160px, hsla(285, 70%, 45%, 0.7), transparent);
+            background-repeat: repeat;
+            background-size: 600px 300px;
+            animation: stars-twinkle 8s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Additional layer of smaller stars */
+        .cosmic-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(1px 1px at 50px 80px, hsla(217, 91%, 80%, 0.4), transparent),
+                radial-gradient(1px 1px at 120px 50px, hsla(285, 70%, 65%, 0.3), transparent),
+                radial-gradient(1px 1px at 180px 140px, hsla(142, 76%, 56%, 0.5), transparent),
+                radial-gradient(1px 1px at 250px 90px, hsla(217, 91%, 80%, 0.3), transparent),
+                radial-gradient(1px 1px at 320px 170px, hsla(285, 70%, 65%, 0.4), transparent),
+                radial-gradient(1px 1px at 400px 110px, hsla(142, 76%, 56%, 0.3), transparent);
+            background-repeat: repeat;
+            background-size: 500px 250px;
+            animation: stars-shimmer 12s ease-in-out infinite reverse;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Floating Cosmic Particles */
+        .cosmic-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, hsla(217, 91%, 60%, 0.6) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float-particle 20s linear infinite;
+        }
+
+        .particle:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            left: 10%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+
+        .particle:nth-child(2) {
+            width: 2px;
+            height: 2px;
+            left: 20%;
+            animation-delay: -5s;
+            animation-duration: 30s;
+            background: radial-gradient(circle, hsla(285, 70%, 45%, 0.5) 0%, transparent 70%);
+        }
+
+        .particle:nth-child(3) {
+            width: 3px;
+            height: 3px;
+            left: 40%;
+            animation-delay: -10s;
+            animation-duration: 35s;
+            background: radial-gradient(circle, hsla(142, 76%, 36%, 0.7) 0%, transparent 70%);
+        }
+
+        .particle:nth-child(4) {
+            width: 2px;
+            height: 2px;
+            left: 60%;
+            animation-delay: -15s;
+            animation-duration: 28s;
+        }
+
+        .particle:nth-child(5) {
+            width: 5px;
+            height: 5px;
+            left: 80%;
+            animation-delay: -20s;
+            animation-duration: 32s;
+            background: radial-gradient(circle, hsla(285, 70%, 45%, 0.6) 0%, transparent 70%);
+        }
+
+        .particle:nth-child(6) {
+            width: 3px;
+            height: 3px;
+            left: 90%;
+            animation-delay: -12s;
+            animation-duration: 26s;
+            background: radial-gradient(circle, hsla(142, 76%, 36%, 0.5) 0%, transparent 70%);
+        }
+
+        /* Nebula Clouds */
+        .nebula-cloud {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.1;
+            animation: drift 40s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .nebula-1 {
+            width: 400px;
+            height: 300px;
+            background: hsla(217, 91%, 60%, 0.3);
+            top: 20%;
+            left: -200px;
+            animation-duration: 60s;
+        }
+
+        .nebula-2 {
+            width: 500px;
+            height: 400px;
+            background: hsla(285, 70%, 45%, 0.2);
+            top: 60%;
+            right: -250px;
+            animation-duration: 80s;
+            animation-direction: reverse;
+        }
+
+        .nebula-3 {
+            width: 300px;
+            height: 200px;
+            background: hsla(142, 76%, 36%, 0.25);
+            top: 10%;
+            right: -150px;
+            animation-duration: 70s;
+            animation-delay: -20s;
+        }
+
+        /* Glass Card Effects */
+        .glass-card {
+            background: hsla(230, 25%, 12%, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid hsla(230, 15%, 20%, 0.3);
+            box-shadow: var(--shadow-cosmic);
+            transition: var(--transition-cosmic);
+            border-radius: var(--radius);
+        }
+        
+        .glass-card:hover {
+            background: hsla(230, 25%, 12%, 0.15);
+            border-color: hsla(217, 91%, 60%, 0.5);
+            box-shadow: var(--shadow-glow);
+            transform: translateY(-5px);
+        }
+
+        /* Planet Card Hover Effect */
+        .planet-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .planet-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-planet);
+            opacity: 0;
+            transition: var(--transition-cosmic);
+            transform: rotate(45deg);
+            z-index: -1;
+        }
+        
+        .planet-card:hover::before {
+            opacity: 0.1;
+        }
+
+        /* Stellar Glow Effects */
+        .stellar-glow {
+            position: relative;
+        }
+        
+        .stellar-glow::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, hsla(217, 91%, 60%, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            border-radius: inherit;
+            z-index: -1;
+            animation: pulse-glow 3s ease-in-out infinite;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: #4CAF50;
-            margin-bottom: 10px;
-        }
-
-        .stats-grid {
+        .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
         }
 
-        .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        .grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .space-y-6 > * + * { margin-top: 1.5rem; }
+        .space-y-12 > * + * { margin-top: 3rem; }
+
+        .text-center { text-align: center; }
+        .text-sm { font-size: 0.875rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-5xl { font-size: 3rem; }
+
+        .font-medium { font-weight: 500; }
+        .font-semibold { font-weight: 600; }
+        .font-bold { font-weight: 700; }
+
+        .text-primary { color: var(--primary); }
+        .text-secondary { color: var(--secondary); }
+        .text-accent { color: var(--accent); }
+        .text-foreground { color: var(--foreground); }
+        .text-muted-foreground { color: var(--muted-foreground); }
+
+        .bg-primary { background-color: var(--primary); }
+        .bg-secondary { background-color: var(--secondary); }
+        .bg-accent { background-color: var(--accent); }
+        .bg-muted { background-color: var(--muted); }
+
+        .p-6 { padding: 1.5rem; }
+        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+        .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+
+        .overflow-hidden { overflow: hidden; }
+        .rounded-full { border-radius: 9999px; }
+
+        .h-96 { height: 24rem; }
+        .w-5 { width: 1.25rem; }
+        .h-5 { height: 1.25rem; }
+        .w-8 { width: 2rem; }
+        .h-8 { height: 2rem; }
+        .w-12 { width: 3rem; }
+        .h-12 { height: 3rem; }
+        .w-16 { width: 4rem; }
+        .h-16 { height: 4rem; }
+
+        .animate-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #4CAF50;
-            display: block;
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
         }
 
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            margin-top: 5px;
-        }
-
-        .controls {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(10px);
-        }
-
-        .control-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
+        .badge {
+            display: inline-flex;
             align-items: center;
+            border-radius: 9999px;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            border: 1px solid transparent;
+            transition: var(--transition-smooth);
         }
 
-        .control-item {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
+        .badge-default {
+            background: var(--primary);
+            color: var(--primary-foreground);
         }
 
-        .control-item label {
-            font-size: 0.9rem;
-            opacity: 0.8;
+        .badge-secondary {
+            background: var(--secondary);
+            color: var(--secondary-foreground);
         }
 
-        .control-item input, .control-item select {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            font-size: 0.9rem;
+        .input {
+            flex: 1;
+            border: 1px solid var(--border);
+            background: var(--input);
+            padding: 0.5rem 0.75rem;
+            border-radius: calc(var(--radius) - 2px);
+            color: var(--foreground);
+            font-size: 0.875rem;
+            transition: var(--transition-smooth);
         }
 
-        .control-item input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .input:focus {
+            outline: none;
+            border-color: var(--ring);
+            box-shadow: 0 0 0 2px hsla(217, 91%, 60%, 0.2);
         }
 
-        .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background: #4CAF50;
-            color: white;
+        .input::placeholder {
+            color: var(--muted-foreground);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: calc(var(--radius) - 2px);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            border: 1px solid transparent;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: background 0.3s;
+            padding: 0.5rem 1rem;
         }
 
-        .btn:hover {
-            background: #45a049;
+        .button-primary {
+            background: var(--primary);
+            color: var(--primary-foreground);
         }
 
-        .btn-secondary {
-            background: #2196F3;
+        .button-primary:hover {
+            background: hsl(217, 91%, 55%);
         }
 
-        .btn-secondary:hover {
-            background: #1976D2;
+        .button-outline {
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--foreground);
         }
 
-        .planets-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+        .button-outline:hover {
+            background: var(--accent);
+            color: var(--accent-foreground);
         }
 
-        .planet-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+        .select {
+            background: var(--input);
+            border: 1px solid var(--border);
+            border-radius: calc(var(--radius) - 2px);
+            padding: 0.5rem 0.75rem;
+            color: var(--foreground);
+            font-size: 0.875rem;
         }
 
-        .planet-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+        .hero-image {
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><defs><radialGradient id="planet" cx="0.3" cy="0.3"><stop offset="0%" stop-color="%23FFA500"/><stop offset="100%" stop-color="%23FF4500"/></radialGradient><radialGradient id="space" cx="0.5" cy="0.5"><stop offset="0%" stop-color="%230f0f23"/><stop offset="100%" stop-color="%23000000"/></radialGradient></defs><rect width="400" height="300" fill="url(%23space)"/><circle cx="120" cy="150" r="60" fill="url(%23planet)"/><circle cx="50" cy="50" r="1" fill="white" opacity="0.8"/><circle cx="150" cy="80" r="1.5" fill="white" opacity="0.6"/><circle cx="250" cy="40" r="1" fill="white" opacity="0.9"/><circle cx="320" cy="90" r="1.2" fill="white" opacity="0.7"/><circle cx="350" cy="200" r="1" fill="white" opacity="0.8"/><circle cx="80" cy="250" r="1.5" fill="white" opacity="0.5"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
-        .planet-name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #4CAF50;
-            margin-bottom: 15px;
+        /* Mobile Responsiveness */
+        @media (min-width: 768px) {
+            .md\\:grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .md\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
 
-        .planet-info {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
+        @media (min-width: 1024px) {
+            .lg\\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+            .lg\\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         }
 
-        .planet-property {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 5px 0;
-        }
-
-        .property-label {
-            font-size: 0.8rem;
-            opacity: 0.7;
-        }
-
-        .property-value {
-            font-weight: bold;
-        }
-
-        .loading {
-            text-align: center;
-            padding: 40px;
-            font-size: 1.2rem;
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 40px;
-            opacity: 0.7;
-        }
-
-        @media (max-width: 768px) {
-            .control-group {
-                flex-direction: column;
+        /* Keyframe Animations */
+        @keyframes stars-twinkle {
+            0% { 
+                opacity: 1;
+                transform: scale(1);
             }
-            
-            .control-item {
-                width: 100%;
+            25% { 
+                opacity: 0.3;
+                transform: scale(0.8);
             }
+            50% { 
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+            75% { 
+                opacity: 0.4;
+                transform: scale(0.9);
+            }
+            100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes stars-shimmer {
+            0% { 
+                opacity: 0.6;
+                filter: brightness(1);
+            }
+            33% { 
+                opacity: 1;
+                filter: brightness(1.5);
+            }
+            66% { 
+                opacity: 0.3;
+                filter: brightness(0.8);
+            }
+            100% { 
+                opacity: 0.6;
+                filter: brightness(1);
+            }
+        }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) translateX(0px) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(10px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(-10px) scale(1);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes drift {
+            0% {
+                transform: translateX(-100px) translateY(0px);
+            }
+            50% {
+                transform: translateX(calc(100vw + 100px)) translateY(-50px);
+            }
+            100% {
+                transform: translateX(calc(100vw + 200px)) translateY(0px);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { 
+                opacity: 0.4;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% { 
+                opacity: 0.8;
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>🌍 Exoplanet Explorer</h1>
-            <p>Discover potentially habitable worlds beyond our solar system</p>
+    <div class="cosmic-bg" style="min-height: 100vh;">
+        <!-- Floating Cosmic Particles -->
+        <div class="cosmic-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
         </div>
+        
+        <!-- Nebula Clouds -->
+        <div class="nebula-cloud nebula-1"></div>
+        <div class="nebula-cloud nebula-2"></div>
+        <div class="nebula-cloud nebula-3"></div>
 
-        <div class="stats-grid" id="stats-grid">
-            <!-- Stats will be loaded here -->
-        </div>
-
-        <div class="controls">
-            <div class="control-group">
-                <div class="control-item">
-                    <label>Search Planet Name:</label>
-                    <input type="text" id="searchInput" placeholder="e.g. Kepler-442 b">
-                </div>
-                
-                <div class="control-item">
-                    <label>Min Size (Earth Radii):</label>
-                    <input type="number" id="minSize" placeholder="0.5" step="0.1">
-                </div>
-                
-                <div class="control-item">
-                    <label>Max Size (Earth Radii):</label>
-                    <input type="number" id="maxSize" placeholder="2.0" step="0.1">
-                </div>
-                
-                <div class="control-item">
-                    <label>Sort By:</label>
-                    <select id="sortBy">
-                        <option value="kepler_name">Planet Name</option>
-                        <option value="koi_prad">Size</option>
-                        <option value="koi_insol">Temperature</option>
-                    </select>
-                </div>
-                
-                <div class="control-item">
-                    <label>Order:</label>
-                    <select id="sortOrder">
-                        <option value="asc">Ascending</option>
-                        <option value="desc">Descending</option>
-                    </select>
-                </div>
-                
-                <div class="control-item">
-                    <button class="btn" onclick="filterPlanets()">Apply Filters</button>
-                    <button class="btn btn-secondary" onclick="resetFilters()">Reset</button>
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden">
+            <div class="hero-image h-96">
+                <div class="absolute inset-0" style="background: linear-gradient(to right, hsla(230, 35%, 7%, 0.8), hsla(230, 35%, 7%, 0.6), hsla(230, 35%, 7%, 0.8));"></div>
+                <div class="relative container" style="height: 100%; display: flex; align-items: center;">
+                    <div style="max-width: 48rem;" class="space-y-6 animate-float">
+                        <div class="flex items-center" style="gap: 0.75rem;">
+                            <div class="stellar-glow">
+                                <div style="width: 3rem; height: 3rem; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                                    🌍
+                                </div>
+                            </div>
+                            <h1 class="text-5xl font-bold text-primary">
+                                Exoplanet Explorer
+                            </h1>
+                        </div>
+                        <p class="text-xl text-muted-foreground">
+                            Discover potentially habitable worlds beyond our solar system in the vast cosmic ocean
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div id="planetsContainer">
-            <div class="loading">Loading planets data...</div>
+        <div class="container py-12 space-y-12">
+            <!-- Stats Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-muted-foreground">Total Planets</div>
+                        <div style="color: var(--primary);">🎯</div>
+                    </div>
+                    <div class="text-3xl font-bold text-primary">6</div>
+                    <p class="text-xs text-muted-foreground mt-1">Confirmed & Candidates</p>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-muted-foreground">Avg Size</div>
+                        <div style="color: var(--accent);">🌍</div>
+                    </div>
+                    <div class="text-3xl font-bold text-accent">1.28</div>
+                    <p class="text-xs text-muted-foreground mt-1">Earth Radii (R⊕)</p>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-muted-foreground">Avg Stellar Flux</div>
+                        <div style="color: var(--secondary);">⚡</div>
+                    </div>
+                    <div class="text-3xl font-bold text-secondary">1.00</div>
+                    <p class="text-xs text-muted-foreground mt-1">Earth Flux (F⊕)</p>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-muted-foreground">Earth-like</div>
+                        <div style="color: var(--primary);">⭐</div>
+                    </div>
+                    <div class="text-3xl font-bold text-primary">3</div>
+                    <p class="text-xs text-muted-foreground mt-1">Similar to Earth</p>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-sm font-medium text-muted-foreground">Small Worlds</div>
+                        <div style="color: var(--accent);">🌍</div>
+                    </div>
+                    <div class="text-3xl font-bold text-accent">2</div>
+                    <p class="text-xs text-muted-foreground mt-1">Less than 1.0 R⊕</p>
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="glass-card p-6">
+                <div class="mb-4">
+                    <h3 class="text-lg font-semibold text-foreground flex items-center">
+                        <span style="margin-right: 0.5rem;">🔍</span>
+                        Exploration Controls
+                    </h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
+                    <div style="grid-column: span 2;">
+                        <label class="text-sm font-medium text-muted-foreground mb-2" style="display: block;">
+                            Search Planet Name
+                        </label>
+                        <input 
+                            type="text" 
+                            class="input" 
+                            placeholder="e.g. Kepler-442 b"
+                            id="searchInput"
+                            style="width: 100%;"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-muted-foreground mb-2" style="display: block;">
+                            Min Size (R⊕)
+                        </label>
+                        <input 
+                            type="number" 
+                            class="input" 
+                            placeholder="0.5"
+                            step="0.1"
+                            id="minSize"
+                            style="width: 100%;"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-muted-foreground mb-2" style="display: block;">
+                            Max Size (R⊕)
+                        </label>
+                        <input 
+                            type="number" 
+                            class="input" 
+                            placeholder="2.0"
+                            step="0.1"
+                            id="maxSize"
+                            style="width: 100%;"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="text-sm font-medium text-muted-foreground mb-2" style="display: block;">
+                            Sort By
+                        </label>
+                        <select class="select" id="sortBy" style="width: 100%;">
+                            <option value="kepler_name">Planet Name</option>
+                            <option value="koi_prad">Size</option>
+                            <option value="koi_insol">Stellar Flux</option>
+                            <option value="koi_period">Orbital Period</option>
+                        </select>
+                    </div>
+
+                    <div class="flex" style="flex-direction: column; justify-content: end; gap: 0.5rem;">
+                        <select class="select" id="sortOrder" style="width: 100%;">
+                            <option value="asc">Ascending</option>
+                            <option value="desc">Descending</option>
+                        </select>
+                        <div class="flex" style="gap: 0.5rem;">
+                            <button class="button button-primary" onclick="applyFilters()" style="flex: 1;">
+                                Apply
+                            </button>
+                            <button class="button button-outline" onclick="resetFilters()">
+                                🔄
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Planets Grid -->
+            <div class="space-y-4">
+                <h2 class="text-2xl font-bold text-foreground">
+                    Discovered Worlds <span id="planetCount">(6)</span>
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="planetsGrid">
+                    <!-- Planets will be rendered here -->
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         let allPlanets = [];
+        let filteredPlanets = [];
 
-        async function loadStats() {
-            try {
-                const response = await fetch('/api/planets/stats');
-                const data = await response.json();
-                
-                if (data.success) {
-                    const statsGrid = document.getElementById('stats-grid');
-                    statsGrid.innerHTML = `
-                        <div class="stat-card">
-                            <span class="stat-value">${data.data.total}</span>
-                            <div class="stat-label">Total Habitable Planets</div>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-value">${data.data.avgSize.toFixed(2)}</span>
-                            <div class="stat-label">Avg Size (Earth Radii)</div>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-value">${data.data.avgTemperature.toFixed(2)}</span>
-                            <div class="stat-label">Avg Stellar Flux</div>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-value">${data.data.earthLikePlanets}</span>
-                            <div class="stat-label">Earth-like Planets</div>
-                        </div>
-                        <div class="stat-card">
-                            <span class="stat-value">${data.data.smallPlanets}</span>
-                            <div class="stat-label">Small Planets (&lt;1.0 R⊕)</div>
-                        </div>
-                    `;
-                }
-            } catch (error) {
-                console.error('Error loading stats:', error);
-            }
-        }
-
-        async function loadPlanets() {
+        // Load planets data from API
+        async function loadPlanetsData() {
             try {
                 const response = await fetch('/api/planets');
                 const data = await response.json();
                 
                 if (data.success) {
                     allPlanets = data.data;
-                    displayPlanets(allPlanets);
+                    filteredPlanets = [...allPlanets];
+                    renderPlanets();
+                } else {
+                    console.error('Failed to load planets data');
                 }
             } catch (error) {
                 console.error('Error loading planets:', error);
-                document.getElementById('planetsContainer').innerHTML = 
-                    '<div class="no-results">Error loading planet data</div>';
+                showErrorState();
             }
         }
 
-        function displayPlanets(planets) {
-            const container = document.getElementById('planetsContainer');
+        // Load statistics from API
+        async function loadStatsData() {
+            try {
+                const response = await fetch('/api/planets/stats');
+                const data = await response.json();
+                
+                if (data.success) {
+                    updateStatsDisplay(data.data);
+                } else {
+                    console.error('Failed to load stats data');
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function updateStatsDisplay(stats) {
+            // Update the hardcoded stats with real data
+            const statsCards = document.querySelectorAll('.glass-card');
+            if (statsCards.length >= 5) {
+                // Total planets
+                statsCards[0].querySelector('.text-3xl').textContent = stats.total || 0;
+                
+                // Average size
+                statsCards[1].querySelector('.text-3xl').textContent = (stats.avgSize || 0).toFixed(2);
+                
+                // Average stellar flux
+                statsCards[2].querySelector('.text-3xl').textContent = (stats.avgTemperature || 0).toFixed(2);
+                
+                // Earth-like planets
+                statsCards[3].querySelector('.text-3xl').textContent = stats.earthLikePlanets || 0;
+                
+                // Small planets
+                statsCards[4].querySelector('.text-3xl').textContent = stats.smallPlanets || 0;
+            }
+        }
+
+        function showErrorState() {
+            const grid = document.getElementById('planetsGrid');
+            grid.innerHTML = `
+                <div class="glass-card p-6" style="grid-column: 1 / -1; text-align: center;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">❌</div>
+                    <h3 class="text-xl font-semibold text-muted-foreground mb-2">
+                        Failed to load planet data
+                    </h3>
+                    <p class="text-muted-foreground">
+                        Make sure the server is running and try refreshing the page
+                    </p>
+                </div>
+            `;
+        }
+
+        function getHabitabilityInfo(insol) {
+            if (insol >= 0.5 && insol <= 1.5) {
+                return { text: 'Highly Habitable', class: 'bg-accent' };
+            }
+            if (insol >= 0.3 && insol <= 2.0) {
+                return { text: 'Potentially Habitable', class: 'bg-primary' };
+            }
+            return { text: 'Low Habitability', class: 'bg-muted' };
+        }
+
+        function renderPlanets() {
+            const grid = document.getElementById('planetsGrid');
+            const count = document.getElementById('planetCount');
             
-            if (planets.length === 0) {
-                container.innerHTML = '<div class="no-results">No planets found matching your criteria</div>';
+            count.textContent = `(${filteredPlanets.length})`;
+
+            if (filteredPlanets.length === 0) {
+                grid.innerHTML = `
+                    <div class="glass-card p-6" style="grid-column: 1 / -1; text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🔭</div>
+                        <h3 class="text-xl font-semibold text-muted-foreground mb-2">
+                            No planets found
+                        </h3>
+                        <p class="text-muted-foreground">
+                            Try adjusting your search criteria to discover more worlds
+                        </p>
+                    </div>
+                `;
                 return;
             }
 
-            const planetsHTML = planets.map(planet => `
-                <div class="planet-card">
-                    <div class="planet-name">${planet.kepler_name || 'Unknown'}</div>
-                    <div class="planet-info">
-                        <div class="planet-property">
-                            <span class="property-label">Size:</span>
-                            <span class="property-value">${parseFloat(planet.koi_prad || 0).toFixed(2)} R⊕</span>
+            grid.innerHTML = filteredPlanets.map(planet => {
+                const habitability = getHabitabilityInfo(parseFloat(planet.koi_insol || 0));
+                const planetName = planet.kepler_name || 'Unknown Planet';
+                const planetSize = parseFloat(planet.koi_prad || 0);
+                const stellarFlux = parseFloat(planet.koi_insol || 0);
+                const orbitalPeriod = parseFloat(planet.koi_period || 0);
+                
+                return `
+                    <div class="glass-card planet-card p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">
+                                    ${planetName}
+                                </h3>
+                                <span class="badge ${planet.koi_disposition === 'CONFIRMED' ? 'badge-default' : 'badge-secondary'} mt-2">
+                                    ${planet.koi_disposition}
+                                </span>
+                            </div>
+                            <div class="stellar-glow">
+                                <div style="width: 2rem; height: 2rem; color: var(--primary); font-size: 1.5rem;">🌍</div>
+                            </div>
                         </div>
-                        <div class="planet-property">
-                            <span class="property-label">Stellar Flux:</span>
-                            <span class="property-value">${parseFloat(planet.koi_insol || 0).toFixed(2)} F⊕</span>
-                        </div>
-                        <div class="planet-property">
-                            <span class="property-label">Period:</span>
-                            <span class="property-value">${parseFloat(planet.koi_period || 0).toFixed(1)} days</span>
-                        </div>
-                        <div class="planet-property">
-                            <span class="property-label">Status:</span>
-                            <span class="property-value">${planet.koi_disposition}</span>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <div class="text-xs text-muted-foreground">Size</div>
+                                <div class="text-lg font-semibold text-foreground">
+                                    ${planetSize.toFixed(2)} R⊕
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-muted-foreground">Stellar Flux</div>
+                                <div class="text-lg font-semibold text-foreground">
+                                    ${stellarFlux.toFixed(2)} F⊕
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-muted-foreground">Orbital Period</div>
+                                <div class="text-lg font-semibold text-foreground">
+                                    ${orbitalPeriod.toFixed(1)} days
+                                </div>
+                            </div>
+                            <div>
+                                <div class="text-xs text-muted-foreground">Habitability</div>
+                                <span class="badge ${habitability.class}">
+                                    ${habitability.text}
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            `).join('');
-
-            container.innerHTML = `<div class="planets-grid">${planetsHTML}</div>`;
+                `;
+            }).join('');
         }
 
-        async function filterPlanets() {
+        async function applyFilters() {
             const search = document.getElementById('searchInput').value;
             const minSize = document.getElementById('minSize').value;
             const maxSize = document.getElementById('maxSize').value;
             const sortBy = document.getElementById('sortBy').value;
-            const order = document.getElementById('sortOrder').value;
+            const sortOrder = document.getElementById('sortOrder').value;
 
+            // Build query parameters
             const params = new URLSearchParams();
             if (search) params.append('search', search);
             if (minSize) params.append('minSize', minSize);
             if (maxSize) params.append('maxSize', maxSize);
             if (sortBy) params.append('sortBy', sortBy);
-            if (order) params.append('order', order);
+            if (sortOrder) params.append('order', sortOrder);
 
             try {
                 const response = await fetch(`/api/planets?${params}`);
                 const data = await response.json();
                 
                 if (data.success) {
-                    displayPlanets(data.data);
+                    filteredPlanets = data.data;
+                    renderPlanets();
+                } else {
+                    console.error('Failed to filter planets');
                 }
             } catch (error) {
                 console.error('Error filtering planets:', error);
@@ -376,20 +956,26 @@
             document.getElementById('maxSize').value = '';
             document.getElementById('sortBy').value = 'kepler_name';
             document.getElementById('sortOrder').value = 'asc';
-            displayPlanets(allPlanets);
+            
+            // Reload original data
+            filteredPlanets = [...allPlanets];
+            renderPlanets();
         }
+
+        // Initialize when page loads
+        async function initializeApp() {
+            await loadStatsData();
+            await loadPlanetsData();
+        }
+
+        // Start the app
+        window.addEventListener('load', initializeApp);
 
         // Add enter key support for search
         document.getElementById('searchInput').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
-                filterPlanets();
+                applyFilters();
             }
-        });
-
-        // Load data when page loads
-        window.addEventListener('load', async () => {
-            await loadStats();
-            await loadPlanets();
         });
     </script>
 </body>
