@@ -483,7 +483,71 @@
             .lg\\:grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
         }
 
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-cosmic);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .loading-screen.hide {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .loading-content > * + * {
+            margin-top: 1.5rem;
+        }
+
+        .telescope-icon {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 auto;
+            color: var(--primary);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .progress-bar {
+            width: 16rem;
+            height: 0.5rem;
+            background: var(--muted);
+            border-radius: 9999px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-stellar);
+            animation: shimmer 2s ease-in-out infinite;
+            transform: translateX(-100%);
+        }
+
         /* Keyframe Animations */
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            50% {
+                transform: translateX(0%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
         @keyframes stars-twinkle {
             0% { 
                 opacity: 1;
@@ -580,6 +644,21 @@
     </style>
 </head>
 <body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="stellar-glow">
+                <div class="telescope-icon">
+                    🔭
+                </div>
+            </div>
+            <h2 class="text-2xl font-bold text-foreground">Scanning the cosmos...</h2>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="cosmic-bg" style="min-height: 100vh;">
         <!-- Floating Cosmic Particles -->
         <div class="cosmic-particles">
@@ -768,15 +847,20 @@
         // Load planets data from API
         async function loadPlanetsData() {
             try {
+                console.log('Fetching planets data...');
                 const response = await fetch('/api/planets');
                 const data = await response.json();
+                
+                console.log('API Response:', data);
                 
                 if (data.success) {
                     allPlanets = data.data;
                     filteredPlanets = [...allPlanets];
+                    console.log('Loaded planets:', allPlanets.length);
                     renderPlanets();
                 } else {
                     console.error('Failed to load planets data');
+                    showErrorState();
                 }
             } catch (error) {
                 console.error('Error loading planets:', error);
@@ -847,8 +931,19 @@
         }
 
         function renderPlanets() {
+            console.log('Rendering planets:', filteredPlanets.length);
             const grid = document.getElementById('planetsGrid');
             const count = document.getElementById('planetCount');
+            
+            if (!grid) {
+                console.error('planetsGrid element not found!');
+                return;
+            }
+            
+            if (!count) {
+                console.error('planetCount element not found!');
+                return;
+            }
             
             count.textContent = `(${filteredPlanets.length})`;
 
@@ -962,19 +1057,56 @@
             renderPlanets();
         }
 
+        // Loading screen functionality
+        function showLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.remove('hide');
+        }
+
+        function hideLoadingScreen() {
+            const loadingScreen = document.getElementById('loadingScreen');
+            loadingScreen.classList.add('hide');
+            
+            // Remove from DOM after transition
+            setTimeout(() => {
+                if (loadingScreen.classList.contains('hide')) {
+                    loadingScreen.style.display = 'none';
+                }
+            }, 500);
+        }
+
         // Initialize when page loads
         async function initializeApp() {
-            await loadStatsData();
-            await loadPlanetsData();
+            try {
+                showLoadingScreen();
+                
+                // Load data with minimum loading time for better UX
+                const [statsResult, planetsResult] = await Promise.all([
+                    loadStatsData(),
+                    loadPlanetsData(),
+                    new Promise(resolve => setTimeout(resolve, 1500)) // Minimum 1.5s loading
+                ]);
+
+                hideLoadingScreen();
+            } catch (error) {
+                console.error('Failed to initialize app:', error);
+                hideLoadingScreen();
+                showErrorState();
+            }
         }
 
         // Start the app
-        window.addEventListener('load', initializeApp);
-
-        // Add enter key support for search
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                applyFilters();
+        window.addEventListener('load', () => {
+            initializeApp();
+            
+            // Add enter key support for search after DOM is loaded
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        applyFilters();
+                    }
+                });
             }
         });
     </script>
