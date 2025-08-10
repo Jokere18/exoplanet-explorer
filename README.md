@@ -254,7 +254,7 @@ Built as a portfolio project to showcase Node.js expertise and full-stack develo
 **Joseph Okere**
 - LinkedIn: (https://www.linkedin.com/in/joseph-okere/)
 - GitHub: [@Jokere18](https://github.com/Jokere18)
-- Email: your.josephokere18@gmail.com
+- Email: josephokere18@gmail.com
 
 ---
 
